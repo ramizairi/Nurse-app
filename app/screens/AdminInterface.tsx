@@ -1,7 +1,9 @@
 import React from 'react';
-import { View, Text, Button, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native';
+import { Text, View, Button, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
+import * as eva from '@eva-design/eva';
+
 import Footer from './footer';
 const logo = require("../../assets/logo.png")
 
@@ -17,25 +19,33 @@ const AdminInterface = ({ navigation }: RouterProps) => {
   };
 
   return (
-    <ImageBackground source={BackgroundImage} style={styles.backgroundImage}>
-      <Image source={logo} style={styles.image} resizeMode='contain' />
-      <View style={styles.container}>
-        <Text style={styles.title}>Welcome to Admin Interface</Text>
+      <ImageBackground source={BackgroundImage} style={styles.backgroundImage}>
+        <Image source={logo} style={styles.image} resizeMode='contain' />
+        <View style={styles.container}>
+          <Text style={styles.title} >Welcome to Admin Interface</Text>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PatientManagement')}>
-          <Text style={styles.buttonText}>Gérer les patient</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PatientManagement')}>
+            <Text style={styles.buttonText}>Ajouter patient</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('NurseManagement')}>
-          <Text style={styles.buttonText}>Gérer les infermier</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ShowPatients')}>
+            <Text style={styles.buttonText}>Afficher la liste des patients</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={handleLogout}>
-          <Text style={styles.buttonText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
-      <Footer />
-    </ImageBackground>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('NurseManagement')}>
+            <Text style={styles.buttonText}>Ajouter infermier</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ShowNurse')}>
+            <Text style={styles.buttonText}>Afficher la liste des infermiers</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={handleLogout}>
+            <Text style={styles.buttonText}>Logout</Text>
+          </TouchableOpacity>
+        </View>
+        <Footer />
+      </ImageBackground>
   );
 };
 

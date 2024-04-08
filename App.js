@@ -2,7 +2,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './app/screens/Login';
 import AdminInterface from './app/screens/AdminInterface';
-import Details from './app/screens/Details';
+import NurseMangement from './app/screens/NurseMangement';
+import PatientManagement from './app/screens/PatientManagement';
 
 import React, { useEffect } from 'react';
 import { useState } from 'react';
@@ -15,8 +16,9 @@ const InsideStack = createNativeStackNavigator();
 function insideLayout() {
   return (
     <InsideStack.Navigator>
-      <InsideStack.Screen name='Admin Panel' component={AdminInterface} />
-      <InsideStack.Screen name='Details' component={Details} />
+      <InsideStack.Screen name='Admin Panel' component={AdminInterface} options={{ headerShown: false }}/>
+      <InsideStack.Screen name='PatientManagement' component={PatientManagement} options={{ headerShown: false }}/>
+      <InsideStack.Screen name='NurseManagement' component={NurseMangement} options={{ headerShown: false }}/>
     </InsideStack.Navigator>
   );
 

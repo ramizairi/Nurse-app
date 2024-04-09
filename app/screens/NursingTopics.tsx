@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
-import Footer from './footer';
 const BackgroundImage = require("../../assets/insideBackground.png");
 
 const img1 = require("../../assets/traitment-img1.jpg")

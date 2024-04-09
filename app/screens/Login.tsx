@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TextInput, ActivityIndicator, KeyboardAvoidingView, Alert, Pressable, SafeAreaView, Switch, Image, Button, TouchableOpacity } from 'react-native';
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
+import { NavigationProp } from '@react-navigation/native';
 const logo = require("../../assets/logo.png")
 const facebook = require("../../assets/facebook-icon.png")
 const instagram = require("../../assets/instagram-icon.png")
@@ -7,7 +8,12 @@ const twitter = require("../../assets/twitter-icon.png")
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
-const Login = () => {
+
+interface RouterProps {
+    navigation: NavigationProp<any, any>;
+}
+
+const Login = ({ navigation }: RouterProps) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -16,51 +22,44 @@ const Login = () => {
     const SignIn = async () => {
         setLoading(true);
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            console.log(user);
+            if (email === 'admin' && password === 'admin123') {
+                navigation.navigate('Admin Panel');
+            } else {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                console.log(user);
+                if (!user.emailVerified) {
+                    Alert.alert('Veuillez vérifier votre email avant de vous connecter.');
+                    return;
+                }
+                navigation.navigate('Patient Panel');
+            }
         } catch (error: any) {
             console.log(error);
-            alert('Sign in faild! ' + error.message);
-        } finally {
-            setLoading(false);
-
-        }
-
-    };
-
-    const SignUp = async () => {
-        setLoading(true);
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            console.log(user);
-            alert("Check your email!");
-        } catch (error) {
-            console.log(error);
-            alert('Sign in faild! ' + error.message);
+            alert('Erreur! Compte non trouvé...');
         } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <SafeAreaView style={styles.container}>
 
             <Image source={logo} style={styles.image} resizeMode='contain' />
-            <Text style={styles.title}>Login</Text>
+            <Text style={styles.title}>Se connecter...</Text>
             <View style={styles.inputView}>
                 <TextInput value={email} style={styles.input} placeholder='Email' autoCapitalize='none' onChangeText={(text) => setEmail(text)} />
-                <TextInput secureTextEntry={true} value={password} style={styles.input} placeholder='Password' autoCapitalize='none' onChangeText={(text) => setPassword(text)} />
+                <TextInput secureTextEntry={true} value={password} style={styles.input} placeholder='Mot de passe' autoCapitalize='none' onChangeText={(text) => setPassword(text)} />
             </View>
             <View style={styles.rememberView}>
-                <View style={styles.switch}>
-                    <Text style={styles.rememberText}>Remember Me</Text>
+                <View>
                 </View>
                 <View>
-                    <Pressable onPress={() => Alert.alert("Forget Password!")}>
-                        <Text style={styles.forgetText}>Forgot Password?</Text>
-                    </Pressable>
+                    <TouchableOpacity onPress={() => navigation.navigate('Réinitialisation de mot de passe')}>
+                        <Text style={styles.forgetText}>Mot de passe oublié?</Text>
+                    </TouchableOpacity>
+
                 </View>
             </View>
 
@@ -69,19 +68,18 @@ const Login = () => {
                     <ActivityIndicator color="white" size='large' />
                 ) : (
                     <TouchableOpacity style={styles.loginButton} onPress={SignIn}>
-                        <Text style={styles.buttonText}>Login</Text>
+                        <Text style={styles.buttonText}>Se connecter</Text>
                     </TouchableOpacity>
                 )}
-                <Text style={styles.optionsText}>OR LOGIN WITH</Text>
+                <Text style={styles.optionsText}>OU CONNECTER AVEC</Text>
             </View>
-
             <View style={styles.mediaIcons}>
                 <Image source={facebook} style={styles.icons} />
                 <Image source={instagram} style={styles.icons} />
                 <Image source={twitter} style={styles.icons} />
             </View>
 
-            <Text style={styles.footerText}>Don't Have Account?<Text style={styles.signup} onPress={SignUp}>  Sign Up</Text></Text>
+            <Text style={styles.footerText}>Nouveau ?<Text style={styles.signup} onPress={() => navigation.navigate('Crée un compte')}>  Créer un compte</Text></Text>
 
 
         </SafeAreaView>
@@ -93,7 +91,7 @@ export default Login;
 
 const styles = StyleSheet.create({
     loginButton: {
-        backgroundColor: 'red',
+        backgroundColor: "#0087c5",
         borderRadius: 7,
         paddingVertical: 10,
         paddingHorizontal: 20,
@@ -105,8 +103,8 @@ const styles = StyleSheet.create({
         paddingTop: 70,
     },
     image: {
-        height: 160,
-        width: 170
+        height: 200,
+        width: 200
     },
     title: {
         fontSize: 30,
@@ -114,7 +112,7 @@ const styles = StyleSheet.create({
         textTransform: "uppercase",
         textAlign: "center",
         paddingVertical: 40,
-        color: "red"
+        color: "#0087c5"
     },
     inputView: {
         gap: 15,
@@ -125,7 +123,7 @@ const styles = StyleSheet.create({
     input: {
         height: 50,
         paddingHorizontal: 20,
-        borderColor: "red",
+        borderColor: "#0087c5",
         borderWidth: 1,
         borderRadius: 7
     },
@@ -149,10 +147,10 @@ const styles = StyleSheet.create({
     },
     forgetText: {
         fontSize: 11,
-        color: "red"
+        color: "#0087c5"
     },
     button: {
-        backgroundColor: "red",
+        backgroundColor: "#0087c5",
         height: 45,
         borderColor: "gray",
         borderWidth: 1,
@@ -192,7 +190,7 @@ const styles = StyleSheet.create({
         color: "gray",
     },
     signup: {
-        color: "red",
+        color: "#0087c5",
         fontSize: 13
     }
 })

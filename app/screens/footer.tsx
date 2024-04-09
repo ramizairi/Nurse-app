@@ -19,6 +19,7 @@ const Footer = () => {
 
 const styles = StyleSheet.create({
     container: {
+        opacity: 0.7,
         width: '100%',
         height: 100,
         justifyContent: 'center',
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     text: {
+        opacity: 1,
         color: 'black',
         fontSize: 15,
         fontWeight: 'bold',

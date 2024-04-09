@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOpacity, Modal } from 'react-native';
-const BackgroundImage = require("../../assets/insideBackground.png");
+const BackgroundImage = require("../../../assets/insideBackground.png");
+const img1 = require("../../../assets/psy-img1.jpg")
+const img2 = require("../../../assets/psy-img2.png")
+const img3 = require("../../../assets/psy-img3.png")
+const img4 = require("../../../assets/psy-img4.jpg")
+const img5 = require("../../../assets/psy-img5.jpg")
+const img6 = require("../../../assets/psy-img6.jpg")
 
-const img1 = require("../../assets/gly-img1.png")
-const img2 = require("../../assets/gly-img2.png")
-
-const Glycemie = () => {
-
+const Physiologie = () => {
     const [selectedImage, setSelectedImage] = useState(null);
 
     const handleImageClick = (image) => {
@@ -30,7 +32,30 @@ const Glycemie = () => {
                     <TouchableOpacity onPress={() => handleImageClick(img2)} style={styles.imageContainer}>
                         <Image source={img2} style={styles.image} />
                     </TouchableOpacity>
+                    
+                    <Text></Text>
 
+                    <TouchableOpacity onPress={() => handleImageClick(img3)} style={styles.imageContainer}>
+                        <Image source={img3} style={styles.image} />
+                    </TouchableOpacity>
+                    
+                    <Text></Text>
+
+                    <TouchableOpacity onPress={() => handleImageClick(img4)} style={styles.imageContainer}>
+                        <Image source={img4} style={styles.image} />
+                    </TouchableOpacity>
+                    
+                    <Text></Text>
+
+                    <TouchableOpacity onPress={() => handleImageClick(img5)} style={styles.imageContainer}>
+                        <Image source={img5} style={styles.image} />
+                    </TouchableOpacity>
+                    
+                    <Text></Text>
+
+                    <TouchableOpacity onPress={() => handleImageClick(img6)} style={styles.imageContainer}>
+                        <Image source={img6} style={styles.image} />
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
             <Modal visible={selectedImage !== null} transparent={true}>
@@ -92,7 +117,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
     },
     modalImage: {
         width: '80%',
@@ -114,4 +139,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Glycemie;
+export default Physiologie;

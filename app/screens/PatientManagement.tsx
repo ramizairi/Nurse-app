@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'green',
+    color: "#0087c5",
     marginBottom: 40,
   },
   inputContainer: {
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   button: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: "#0087c5",
     borderRadius: 8,
     paddingVertical: 12,
     paddingHorizontal: 24,

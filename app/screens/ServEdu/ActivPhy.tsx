@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOpacity, Modal } from 'react-native';
-const BackgroundImage = require("../../assets/insideBackground.png");
+const BackgroundImage = require("../../../assets/insideBackground.png");
 
-const img1 = require("../../assets/gly-img1.png")
-const img2 = require("../../assets/gly-img2.png")
+const img1 = require("../../../assets/ActPhy-img1.jpg")
+const img2 = require("../../../assets/ActPhy-img2.jpg")
+const img3 = require("../../../assets/ActPhy-img3.jpg")
 
-const Glycemie = () => {
+const ActivPhy = () => {
 
     const [selectedImage, setSelectedImage] = useState(null);
 
@@ -30,7 +31,12 @@ const Glycemie = () => {
                     <TouchableOpacity onPress={() => handleImageClick(img2)} style={styles.imageContainer}>
                         <Image source={img2} style={styles.image} />
                     </TouchableOpacity>
+                    
+                    <Text></Text>
 
+                    <TouchableOpacity onPress={() => handleImageClick(img3)} style={styles.imageContainer}>
+                        <Image source={img3} style={styles.image} />
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
             <Modal visible={selectedImage !== null} transparent={true}>
@@ -114,4 +120,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Glycemie;
+export default ActivPhy;

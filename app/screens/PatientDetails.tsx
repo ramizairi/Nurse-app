@@ -14,6 +14,7 @@ const PatientDetailsScreen = ({ route }) => {
     const [doseName2, setDoseName2] = useState('');
     const [doseName3, setDoseName3] = useState('');
     const [doseName4, setDoseName4] = useState('');
+    const [Comment, setComment] = useState('');
 
     const handleAddDose = async () => {
         try {
@@ -34,6 +35,7 @@ const PatientDetailsScreen = ({ route }) => {
                 dose3: doseName3,
                 dose4: doseName4,
                 time: currentTime,
+                Comment: Comment,
             });
 
             // Clear input fields after adding dose
@@ -41,6 +43,7 @@ const PatientDetailsScreen = ({ route }) => {
             setDoseName2('');
             setDoseName3('');
             setDoseName4('');
+            setComment('');
 
             alert('Dose added successfully!');
         } catch (error) {
@@ -97,13 +100,18 @@ const PatientDetailsScreen = ({ route }) => {
                         <FlatList
                             data={motifsAdmission}
                             renderItem={({ item }) => (
-                                <View style={styles.tableRow}>
-                                    <Text style={styles.cell}>{item.dose1}</Text>
-                                    <Text style={styles.cell}>{item.dose2}</Text>
-                                    <Text style={styles.cell}>{item.dose3}</Text>
-                                    <Text style={styles.cell}>{item.dose4}</Text>
-                                    <Text style={styles.cell}>{item.time}</Text>
-                                </View>
+                                <>
+                                    <View style={styles.tableRow}>
+                                        <Text style={styles.cell}>{item.dose1}</Text>
+                                        <Text style={styles.cell}>{item.dose2}</Text>
+                                        <Text style={styles.cell}>{item.dose3}</Text>
+                                        <Text style={styles.cell}>{item.dose4}</Text>
+                                        <Text style={styles.cell}>{item.time}</Text>
+                                    </View>
+                                    <View>
+                                        <Text style={styles.cell}>{"|-->"}{item.Comment}</Text>
+                                    </View>
+                                </>
                             )}
                             keyExtractor={(item) => item.id}
                         />
@@ -158,6 +166,18 @@ const PatientDetailsScreen = ({ route }) => {
                             value={doseName4}
                             onChangeText={text => setDoseName4(text)}
                             keyboardType='numeric'
+                        />
+                    </View>
+                    <View style={styles.tableRow}>
+                        <Text style={styles.tableHeader}>Commentaire</Text>
+                    </View>
+                    <View style={styles.inputCommentRow}>
+                        <TextInput
+                            style={styles.textArea}
+                            placeholder="Commentaire"
+                            value={Comment}
+                            onChangeText={text => setComment(text)}
+                            multiline={true}
                         />
                     </View>
                 </View>
@@ -230,6 +250,19 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
+    inputCommentRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    textArea: {
+        flex: 1,
+        height: 80,
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginRight: 10,
+        paddingLeft: 10,
+    },
     input: {
         flex: 1,
         height: 40,
@@ -276,7 +309,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
     },
     cell: {
-        fontSize: 15,
+        fontSize: 12,
         flex: 1,
         textAlign: 'left',
     }

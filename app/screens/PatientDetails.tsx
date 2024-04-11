@@ -14,7 +14,6 @@ const PatientDetailsScreen = ({ route }) => {
     const [doseName2, setDoseName2] = useState('');
     const [doseName3, setDoseName3] = useState('');
     const [doseName4, setDoseName4] = useState('');
-    const [doseTime, setDoseTime] = useState('');
 
     const handleAddDose = async () => {
         try {
@@ -25,6 +24,8 @@ const PatientDetailsScreen = ({ route }) => {
             const motifsAdmissionSnapshot = await getDocs(motifsAdmissionRef);
             const index = motifsAdmissionSnapshot.size;
 
+            const currentTime = new Date().toLocaleTimeString();
+
             // Add the new dose details as a new document within the motifs_admission subcollection
             await addDoc(motifsAdmissionRef, {
                 index: index,
@@ -32,7 +33,7 @@ const PatientDetailsScreen = ({ route }) => {
                 dose2: doseName2,
                 dose3: doseName3,
                 dose4: doseName4,
-                time: doseTime,
+                time: currentTime,
             });
 
             // Clear input fields after adding dose
@@ -40,7 +41,6 @@ const PatientDetailsScreen = ({ route }) => {
             setDoseName2('');
             setDoseName3('');
             setDoseName4('');
-            setDoseTime('');
 
             alert('Dose added successfully!');
         } catch (error) {
@@ -54,7 +54,7 @@ const PatientDetailsScreen = ({ route }) => {
     useEffect(() => {
         const fetchMotifsAdmission = async () => {
             try {
-                const motifsAdmissionRef = collection(doc(FIREBASE_DB, 'patients', patient.id), 'motifs_admission');
+                const motifsAdmissionRef = collection(doc(FIREBASE_DB, 'patient', patient.id), 'motifs_admission');
                 const motifsAdmissionSnapshot = await getDocs(motifsAdmissionRef);
                 const motifsAdmissionData = motifsAdmissionSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 setMotifsAdmission(motifsAdmissionData);
@@ -88,7 +88,6 @@ const PatientDetailsScreen = ({ route }) => {
                             <Text style={styles.headerTopBarTxt}>Motifs Admission</Text>
                         </View>
                         <View style={styles.header}>
-                            <Text style={styles.heading}>I</Text>
                             <Text style={styles.heading}>Per</Text>
                             <Text style={styles.heading}>Med</Text>
                             <Text style={styles.heading}>Alim</Text>
@@ -106,7 +105,7 @@ const PatientDetailsScreen = ({ route }) => {
                                     <Text style={styles.cell}>{item.time}</Text>
                                 </View>
                             )}
-                            keyExtractor={(item) => item.id} // Assuming 'id' is the unique identifier for each item
+                            keyExtractor={(item) => item.id}
                         />
 
                     </View>
@@ -272,6 +271,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     heading: {
+        fontWeight: 'bold',
         flex: 1,
         fontSize: 15,
     },

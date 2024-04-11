@@ -22,11 +22,12 @@ const Login = ({ navigation }: RouterProps) => {
     const SignIn = async () => {
         setLoading(true);
         try {
-            if (email === 'admin' && password === 'admin123') {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            if (user.email === 'mohamedrami.zairi.2022@ihec.ucar.tn') {
                 navigation.navigate('Admin Panel');
+                console.log(user);
             } else {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
                 console.log(user);
                 if (!user.emailVerified) {
                     Alert.alert('Veuillez vérifier votre email avant de vous connecter.');
@@ -71,13 +72,9 @@ const Login = ({ navigation }: RouterProps) => {
                         <Text style={styles.buttonText}>Se connecter</Text>
                     </TouchableOpacity>
                 )}
-                <Text style={styles.optionsText}>OU CONNECTER AVEC</Text>
+                <Text></Text>
             </View>
-            <View style={styles.mediaIcons}>
-                <Image source={facebook} style={styles.icons} />
-                <Image source={instagram} style={styles.icons} />
-                <Image source={twitter} style={styles.icons} />
-            </View>
+
 
             <Text style={styles.footerText}>Nouveau ?<Text style={styles.signup} onPress={() => navigation.navigate('Crée un compte')}>  Créer un compte</Text></Text>
 

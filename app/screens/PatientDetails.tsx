@@ -109,7 +109,7 @@ const PatientDetailsScreen = ({ route }) => {
                                         <Text style={styles.cell}>{item.time}</Text>
                                     </View>
                                     <View>
-                                        <Text style={styles.cell}>{"|-->"}{item.Comment}</Text>
+                                        <Text style={styles.cell}>{"↳"}{item.Comment}</Text>
                                     </View>
                                 </>
                             )}

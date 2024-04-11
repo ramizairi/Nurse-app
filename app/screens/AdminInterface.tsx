@@ -38,9 +38,9 @@ const AdminInterface = ({ navigation }: RouterProps) => {
             <Text style={styles.buttonText}>Afficher la liste des infermiers</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.buttonText}>Logout </Text>
-          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={handleLogout}>
+          <Text style={styles.buttonText}>Logout</Text>
+        </TouchableOpacity>
         </View>
       </ImageBackground>
   );

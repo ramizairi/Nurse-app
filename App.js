@@ -30,8 +30,8 @@ const InsideStack = createNativeStackNavigator();
 function InsideLayout() {
   return (
     <InsideStack.Navigator>
-      <InsideStack.Screen name='Admin Panel' component={AdminInterface} options={{ headerShown: false }} />
       <InsideStack.Screen name='Nurse Panel' component={NurseInterface} options={{ headerShown: false }} />
+      <InsideStack.Screen name='Admin Panel' component={AdminInterface} options={{ headerShown: false }} />
       <InsideStack.Screen name='PatientManagement' component={PatientManagement} options={{ headerShown: false }} />
       <InsideStack.Screen name='NurseManagement' component={NurseMangement} options={{ headerShown: false }} />
       <InsideStack.Screen name='ShowNurse' component={ShowNurse} options={{ headerShown: false }} />
@@ -71,8 +71,6 @@ export default function App() {
           <Stack.Screen name='Inside' component={InsideLayout} options={{ headerShown: false }} />
         ) : (
           <>
-            <Stack.Screen name='Nurse Panel' component={NurseInterface} options={{ headerShown: false }} />
-            <Stack.Screen name='Admin Panel' component={AdminInterface} options={{ headerShown: false }} />
             <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
             <Stack.Screen name='Réinitialisation de mot de passe' component={ForgotPassword} options={{ headerShown: false }} />
             <Stack.Screen name='Crée un compte' component={SignUp} options={{ headerShown: false }} />

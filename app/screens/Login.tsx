@@ -28,17 +28,15 @@ const Login = ({ navigation }: RouterProps) => {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
     
-            // Check if the user's email is verified
             if (!user.emailVerified) {
                 Alert.alert('Erreur', 'Veuillez vérifier votre email avant de vous connecter.');
                 return;
             }
     
-            // Navigate based on user type
             if (user.email === 'mohamedrami.zairi.2022@ihec.ucar.tn') {
-                navigation.navigate('Admin Panel');
+                navigation.navigate('Inside', { screen: 'Admin Panel' })
             } else {
-                navigation.navigate('Nurse Panel');
+                navigation.navigate('Inside', { screen: 'Nurse Panel' })
             }
         } catch (error) {
             console.error('Erreur de connexion:', error);

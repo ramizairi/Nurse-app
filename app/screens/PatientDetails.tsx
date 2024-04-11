@@ -18,7 +18,7 @@ const PatientDetailsScreen = ({ route }) => {
             const patientRef = doc(FIREBASE_DB, 'patient', patient.id);
             const motifsAdmissionRef = collection(patientRef, 'motifs_admission');
 
-            
+
             const motifsAdmissionSnapshot = await getDocs(motifsAdmissionRef);
             const index = motifsAdmissionSnapshot.size;
 
@@ -39,7 +39,6 @@ const PatientDetailsScreen = ({ route }) => {
                 });
             }
 
-
             setDoseName1('');
             setDoseName2('');
             setDoseName3('');
@@ -54,16 +53,12 @@ const PatientDetailsScreen = ({ route }) => {
     };
 
     const [motifsAdmission, setMotifsAdmission] = useState([]);
-    // Fetches the list of motifs admission data for the patient from Firebase and sets it to our local state.
     useEffect(() => {
-        // Function to fetch motifs admission data and set up real-time listener
         const fetchMotifsAdmission = () => {
-            // Get a reference to the 'motifs_admission' collection for the patient
             const motifsAdmissionRef = collection(doc(FIREBASE_DB, 'patient', patient.id), 'motifs_admission');
-            
+
             // Set up real-time listener using onSnapshot
             const unsubscribe = onSnapshot(motifsAdmissionRef, (motifsAdmissionSnapshot) => {
-                // Map the documents to an array of objects
 
                 const motifsAdmissionData = motifsAdmissionSnapshot.docs.map(doc => ({
                     id: doc.id,
@@ -76,21 +71,17 @@ const PatientDetailsScreen = ({ route }) => {
                     time: doc.data().time,
                 }));
 
-                // Sort the data based on the 'index' field in ascending order
                 motifsAdmissionData.sort((a, b) => a.index - b.index);
-                
-                // Update the state with the sorted data
+
                 setMotifsAdmission(motifsAdmissionData);
             });
-            
-            // Return a cleanup function to remove the listener when the component unmounts
+
             return () => unsubscribe();
         };
-    
-        // Call the function to set up the listener
+
         fetchMotifsAdmission();
-    }, [patient.id]); // Re-run effect if patient ID changes
-    
+    }, [patient.id]);
+
 
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>

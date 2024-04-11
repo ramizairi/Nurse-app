@@ -18,16 +18,17 @@ const PatientInterface = ({ navigation }: RouterProps) => {
   const [problems, setProblems] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [NurseId, setNurseId] = useState('');
 
   const handleAddPatient = async () => {
     try {
       await addDoc(collection(FIREBASE_DB, 'patient'), {
         fname: fname,
         lname: lname,
-        allergies: allergies,
         problems: problems,
         email: email,
         phone: phone,
+        NurseId: FIREBASE_AUTH.currentUser?.uid,
       });
       alert(`${fname} ${lname} added successfully`);
       navigation.navigate('PatientManagement');
@@ -61,12 +62,6 @@ const PatientInterface = ({ navigation }: RouterProps) => {
               placeholder="Prénom"
               value={lname}
               onChangeText={setLname}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Allergies"
-              value={allergies}
-              onChangeText={setAllergies}
             />
             <TextInput
               style={styles.input}

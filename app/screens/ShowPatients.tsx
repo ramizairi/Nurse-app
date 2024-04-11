@@ -22,7 +22,6 @@ interface Patient {
 
 const ShowPatients = ({ navigation }: RouterProps) => {
     const [patients, setPatients] = useState<Patient[]>([]);
-
     useEffect(() => {
         const fetchPatients = async () => {
             const patientCollection = collection(FIREBASE_DB, 'patient');
@@ -46,7 +45,7 @@ const ShowPatients = ({ navigation }: RouterProps) => {
     );
 
     const handlePatientDetails = (patient: Patient) => {
-        navigation.navigate('PatientDetails', { patient: patient });
+        navigation.navigate('Détails du Patient', { patient: patient });
     };
 
     return (

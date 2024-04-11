@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TextInput, ActivityIndicator, KeyboardAvoidingV
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 import { sendEmailVerification } from 'firebase/auth';
 import { NavigationProp } from '@react-navigation/native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { addDoc, collection } from "firebase/firestore";
 
 import React, { useState } from 'react';

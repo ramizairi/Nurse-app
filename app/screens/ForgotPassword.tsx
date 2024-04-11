@@ -2,6 +2,8 @@ import { View, Text, StyleSheet, TextInput, ActivityIndicator, SafeAreaView, Ima
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const logo = require("../../assets/logo.png")
 
 const ForgotPassword = ({ navigation }) => {

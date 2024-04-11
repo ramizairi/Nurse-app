@@ -7,7 +7,7 @@ const img2 = require("../../../assets/eduNut-img2.jpg")
 const img3 = require("../../../assets/eduNut-img3.jpg")
 const img4 = require("../../../assets/eduNut-img4.jpg")
 
-const eduNur = () => {
+const EduNur = () => {
 
     const [selectedImage, setSelectedImage] = useState(null);
 
@@ -127,4 +127,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default eduNur;
+export default EduNur;

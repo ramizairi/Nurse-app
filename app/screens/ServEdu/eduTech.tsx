@@ -7,7 +7,7 @@ const img2 = require("../../../assets/eduTech-img2.jpg")
 const img3 = require("../../../assets/eduTech-img3.jpg")
 const img4 = require("../../../assets/eduTech-img4.jpg")
 
-const eduTech = () => {
+const EduTech = () => {
 
     const [selectedImage, setSelectedImage] = useState(null);
 
@@ -128,4 +128,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default eduTech;
+export default EduTech;

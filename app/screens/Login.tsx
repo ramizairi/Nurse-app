@@ -2,11 +2,9 @@ import { View, Text, StyleSheet, TextInput, ActivityIndicator, KeyboardAvoidingV
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
 import { NavigationProp } from '@react-navigation/native';
 const logo = require("../../assets/logo.png")
-const facebook = require("../../assets/facebook-icon.png")
-const instagram = require("../../assets/instagram-icon.png")
-const twitter = require("../../assets/twitter-icon.png")
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import {signInWithEmailAndPassword } from 'firebase/auth';
+
 
 
 interface RouterProps {
@@ -20,28 +18,36 @@ const Login = ({ navigation }: RouterProps) => {
     const auth = FIREBASE_AUTH;
 
     const SignIn = async () => {
+        if (!email || !password) {
+            Alert.alert('Erreur', 'Veuillez entrer un email et un mot de passe');
+            return;
+        }
+    
         setLoading(true);
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
+    
+            // Check if the user's email is verified
+            if (!user.emailVerified) {
+                Alert.alert('Erreur', 'Veuillez vérifier votre email avant de vous connecter.');
+                return;
+            }
+    
+            // Navigate based on user type
             if (user.email === 'mohamedrami.zairi.2022@ihec.ucar.tn') {
                 navigation.navigate('Admin Panel');
-                console.log(user);
             } else {
-                console.log(user);
-                if (!user.emailVerified) {
-                    Alert.alert('Veuillez vérifier votre email avant de vous connecter.');
-                    return;
-                }
-                navigation.navigate('Patient Panel');
+                navigation.navigate('Nurse Panel');
             }
-        } catch (error: any) {
-            console.log(error);
-            alert('Erreur! Compte non trouvé...');
+        } catch (error) {
+            console.error('Erreur de connexion:', error);
+            Alert.alert('Erreur', 'Erreur de connexion. Veuillez réessayer.');
         } finally {
             setLoading(false);
         }
     };
+    
 
 
     return (

@@ -18,7 +18,7 @@ import eduTech from './app/screens/ServEdu/eduTech';
 import Physiologie from './app/screens/ServEdu/physiologie';
 import ForgotPassword from './app/screens/ForgotPassword';
 import SignUp from './app/screens/SignUp';
-
+import PatientDetails from './app/screens/PatientDetails';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { FIREBASE_AUTH } from './FirebaseConfig';
@@ -48,6 +48,8 @@ function insideLayout() {
       <InsideStack.Screen name='ForgotPassword' component={ForgotPassword} options={{ headerShown: true }} />
       <InsideStack.Screen name='Login' component={Login} options={{ headerShown: false }} />
       <InsideStack.Screen name='SignUp' component={SignUp} options={{ headerShown: false }} />
+      <InsideStack.Screen name='PatientDetails' component={PatientDetails} options={{ headerShown: true }} />
+
     </InsideStack.Navigator>
   );
 
@@ -72,12 +74,6 @@ export default function App() {
             <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
             <Stack.Screen name='Réinitialisation de mot de passe' component={ForgotPassword} options={{ headerShown: false }} />
             <Stack.Screen name='Crée un compte' component={SignUp} options={{ headerShown: false }} />
-            <Stack.Screen name='Admin Panel' component={AdminInterface} options={{ headerShown: false }} />
-            <Stack.Screen name='PatientManagement' component={PatientManagement} options={{ headerShown: false }} />
-            <Stack.Screen name='NurseManagement' component={NurseMangement} options={{ headerShown: false }} />
-            <Stack.Screen name='ShowNurse' component={ShowNurse} options={{ headerShown: false }} />
-            <Stack.Screen name='ShowPatients' component={ShowPatients} options={{ headerShown: false }} />
-
           </>
         )}
       </Stack.Navigator>

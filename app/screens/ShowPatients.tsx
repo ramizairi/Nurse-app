@@ -38,10 +38,6 @@ const ShowPatients = ({ navigation }: RouterProps) => {
         <TouchableOpacity style={styles.itemContainer} onPress={() => handlePatientDetails(item)}>
             <Text style={styles.itemText}>Nom :</Text>
             <Text style={styles.itemDetails}>{item.fname} {item.lname}</Text>
-            <Text style={styles.itemText}>Allergies :</Text>
-            <Text style={styles.itemDetails}>{item.allergies}</Text>
-            <Text style={styles.itemText}>Les Problemes :</Text>
-            <Text style={styles.itemDetails}>{item.problems}</Text>
             <Text style={styles.itemText}>Email :</Text>
             <Text style={styles.itemDetails}>{item.email}</Text>
             <Text style={styles.itemText}>Numéro de télephone :</Text>
@@ -50,8 +46,7 @@ const ShowPatients = ({ navigation }: RouterProps) => {
     );
 
     const handlePatientDetails = (patient: Patient) => {
-        // Naviguer vers l'écran des détails du patient
-        // Vous pouvez définir votre propre logique de navigation ici
+        navigation.navigate('PatientDetails', { patient: patient });
     };
 
     return (

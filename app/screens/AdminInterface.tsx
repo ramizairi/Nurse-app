@@ -2,7 +2,6 @@ import React from 'react';
 import { Text, View, Button, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
-import Footer from './footer';
 const logo = require("../../assets/logo.png")
 
 const BackgroundImage = require("../../assets/background.jpg")

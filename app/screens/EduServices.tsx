@@ -4,7 +4,6 @@ import { NavigationProp } from '@react-navigation/native';
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
 
 
-import Footer from './footer';
 const logo = require("../../assets/logo.png")
 const BackgroundImage = require("../../assets/eduservice.jpg")
 

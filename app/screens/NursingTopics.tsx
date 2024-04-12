@@ -2,10 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
 const BackgroundImage = require("../../assets/insideBackground.png");
 
-const img1 = require("../../assets/traitment-img1.jpg")
-const img2 = require("../../assets/traitment-img2.jpg")
-const img3 = require("../../assets/traitment-img3.jpg")
-
 const NursingTopics = () => {
   return (
     <ImageBackground source={BackgroundImage} style={styles.backgroundImage}>

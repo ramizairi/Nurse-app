@@ -1,5 +1,12 @@
+
+import 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { onAuthStateChanged } from 'firebase/auth';
+import { FIREBASE_AUTH } from './FirebaseConfig';
+import { enableScreens } from 'react-native-screens';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Login from './app/screens/Login';
 import AdminInterface from './app/screens/AdminInterface';
 import NurseInterface from './app/screens/NurseInterface';
@@ -19,13 +26,20 @@ import Physiologie from './app/screens/ServEdu/physiologie';
 import ForgotPassword from './app/screens/ForgotPassword';
 import SignUp from './app/screens/SignUp';
 import PatientDetails from './app/screens/PatientDetails';
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import { FIREBASE_AUTH } from './FirebaseConfig';
-import { onAuthStateChanged } from 'firebase/auth'
+
+
+enableScreens();
 
 const Stack = createNativeStackNavigator();
 const InsideStack = createNativeStackNavigator();
+
+
+const withHeaderOptions = (options) => (Component) => {
+  return (props) => <Component {...props} options={options} />;
+};
+
+
+const defaultInsideOptions = { headerShown: true };
 
 function InsideLayout() {
   return (
@@ -36,49 +50,57 @@ function InsideLayout() {
       <InsideStack.Screen name='NurseManagement' component={NurseMangement} options={{ headerShown: false }} />
       <InsideStack.Screen name='ShowNurse' component={ShowNurse} options={{ headerShown: false }} />
       <InsideStack.Screen name='ShowPatients' component={ShowPatients} options={{ headerShown: false }} />
-      <InsideStack.Screen name='Traitement' component={NursingTopics} options={{ headerShown: true }} />
-      <InsideStack.Screen name='Glycemie' component={Glycemie} options={{ headerShown: true }} />
-      <InsideStack.Screen name='Services éducationnels' component={EduServices} options={{ headerShown: true }} />
-      <InsideStack.Screen name='Activite  physique' component={ActivPhy} options={{ headerShown: true }} />
-      <InsideStack.Screen name='Complilation' component={Comp} options={{ headerShown: true }} />
-      <InsideStack.Screen name="Education d'hygiène" component={EduHyg} options={{ headerShown: true }} />
-      <InsideStack.Screen name='Education nutritionnelle' component={EduNur} options={{ headerShown: true }} />
-      <InsideStack.Screen name='Education technique' component={EduTech} options={{ headerShown: true }} />
-      <InsideStack.Screen name='Physiologie' component={Physiologie} options={{ headerShown: true }} />
-      <InsideStack.Screen name='ForgotPassword' component={ForgotPassword} options={{ headerShown: true }} />
+      <InsideStack.Screen name='Traitement' component={NursingTopics} options={defaultInsideOptions} />
+      <InsideStack.Screen name='Glycemie' component={Glycemie} options={defaultInsideOptions} />
+      <InsideStack.Screen name='Services éducationnels' component={EduServices} options={defaultInsideOptions} />
+      <InsideStack.Screen name='Activite physique' component={ActivPhy} options={defaultInsideOptions} />
+      <InsideStack.Screen name='Complilation' component={Comp} options={defaultInsideOptions} />
+      <InsideStack.Screen name="Education d'hygiène" component={EduHyg} options={defaultInsideOptions} />
+      <InsideStack.Screen name='Education nutritionnelle' component={EduNur} options={defaultInsideOptions} />
+      <InsideStack.Screen name='Education technique' component={EduTech} options={defaultInsideOptions} />
+      <InsideStack.Screen name='Physiologie' component={Physiologie} options={defaultInsideOptions} />
+      <InsideStack.Screen name='ForgotPassword' component={ForgotPassword} options={defaultInsideOptions} />
       <InsideStack.Screen name='Login' component={Login} options={{ headerShown: false }} />
       <InsideStack.Screen name='SignUp' component={SignUp} options={{ headerShown: false }} />
-      <InsideStack.Screen name='Détails du Patient' component={PatientDetails} options={{ headerShown: true }} />
-
+      <InsideStack.Screen name='Détails du Patient' component={PatientDetails} options={defaultInsideOptions} />
     </InsideStack.Navigator>
   );
-
 }
 
 export default function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    onAuthStateChanged(FIREBASE_AUTH, (user) => {
-      console.log('User: ', user);
-      setUser(user);
+    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (authUser) => {
+      if (authUser) {
+        console.log('User: ', authUser);
+        setUser(authUser);
+      } else {
+        setUser(null);
+      }
     });
+
+    // Cleanup subscription on component unmount
+    return () => {
+      unsubscribe();
+    };
   }, []);
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login'>
-        {user ? (
-          <Stack.Screen name='Inside' component={InsideLayout} options={{ headerShown: false }} />
-        ) : (
-          <>
-            <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
-            <Stack.Screen name='Réinitialisation de mot de passe' component={ForgotPassword} options={{ headerShown: false }} />
-            <Stack.Screen name='Crée un compte' component={SignUp} options={{ headerShown: false }} />
-          </>
-        )}
-      </Stack.Navigator>
-
-    </NavigationContainer>
-  );
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName='Login'>
+          {user ? (
+            <Stack.Screen name='Inside' component={InsideLayout} options={{ headerShown: false }} />
+          ) : (
+            <>
+              <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+              <Stack.Screen name='Réinitialisation de mot de passe' component={ForgotPassword} options={{ headerShown: false }} />
+              <Stack.Screen name='Crée un compte' component={SignUp} options={{ headerShown: false }} />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );  
 }
-

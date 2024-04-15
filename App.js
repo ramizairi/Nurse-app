@@ -34,11 +34,6 @@ const Stack = createNativeStackNavigator();
 const InsideStack = createNativeStackNavigator();
 
 
-const withHeaderOptions = (options) => (Component) => {
-  return (props) => <Component {...props} options={options} />;
-};
-
-
 const defaultInsideOptions = { headerShown: true };
 
 function InsideLayout() {
@@ -80,7 +75,6 @@ export default function App() {
       }
     });
 
-    // Cleanup subscription on component unmount
     return () => {
       unsubscribe();
     };

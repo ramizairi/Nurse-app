@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOpacity, Modal, ImageSourcePropType } from 'react-native';
+import { SliderBox } from "react-native-image-slider-box";
 const BackgroundImage = require("../../../assets/insideBackground.png");
 const img1 = require("../../../assets/psy-img1.jpg")
 const img2 = require("../../../assets/psy-img2.png")
@@ -9,9 +10,17 @@ const img5 = require("../../../assets/psy-img5.jpg")
 const img6 = require("../../../assets/psy-img6.jpg")
 
 const Physiologie = () => {
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState<ImageSourcePropType | null>(null);
+    const [images] = useState<ImageSourcePropType[]>([
+        img1,
+        img2,
+        img3,
+        img4,
+        img5,
+        img6,
+    ]);
 
-    const handleImageClick = (image) => {
+    const handleImageClick = (image: ImageSourcePropType): void => {
         setSelectedImage(image);
     };
 
@@ -21,43 +30,11 @@ const Physiologie = () => {
 
     return (
         <ImageBackground source={BackgroundImage} style={styles.backgroundImage}>
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
-                <View style={styles.container}>
-                    <TouchableOpacity onPress={() => handleImageClick(img1)} style={styles.imageContainer}>
-                        <Image source={img1} style={styles.image} />
-                    </TouchableOpacity>
-
-                    <Text></Text>
-
-                    <TouchableOpacity onPress={() => handleImageClick(img2)} style={styles.imageContainer}>
-                        <Image source={img2} style={styles.image} />
-                    </TouchableOpacity>
-                    
-                    <Text></Text>
-
-                    <TouchableOpacity onPress={() => handleImageClick(img3)} style={styles.imageContainer}>
-                        <Image source={img3} style={styles.image} />
-                    </TouchableOpacity>
-                    
-                    <Text></Text>
-
-                    <TouchableOpacity onPress={() => handleImageClick(img4)} style={styles.imageContainer}>
-                        <Image source={img4} style={styles.image} />
-                    </TouchableOpacity>
-                    
-                    <Text></Text>
-
-                    <TouchableOpacity onPress={() => handleImageClick(img5)} style={styles.imageContainer}>
-                        <Image source={img5} style={styles.image} />
-                    </TouchableOpacity>
-                    
-                    <Text></Text>
-
-                    <TouchableOpacity onPress={() => handleImageClick(img6)} style={styles.imageContainer}>
-                        <Image source={img6} style={styles.image} />
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
+            <SliderBox
+                images={images}
+                sliderBoxHeight={400}
+                onCurrentImagePressed={(index: number) => handleImageClick(images[index])}
+            />
             <Modal visible={selectedImage !== null} transparent={true}>
                 <View style={styles.modalContainer}>
                     <TouchableOpacity style={styles.closeButton} onPress={handleCloseModal}>
@@ -81,7 +58,8 @@ const styles = StyleSheet.create({
         width: "100%"
     },
     backgroundImage: {
-        flex: 1,
+        paddingTop: 100,
+        paddingBottom: 100,
         resizeMode: 'cover',
         justifyContent: 'center',
         alignItems: 'center',

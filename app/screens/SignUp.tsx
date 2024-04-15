@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { addDoc, collection } from "firebase/firestore";
 
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword} from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 
 interface RouterProps {
@@ -31,27 +31,28 @@ const SignUp = ({ navigation }: RouterProps) => {
         if (password !== confirmPassword) {
             Alert.alert('Les mots de passe ne correspondent pas');
             return;
-        }
+        } else {
 
-        setLoading(true);
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                setLoading(true);
-                const user = userCredential.user;
-                sendEmailVerification(user)
-                    .then(() => {
-                        Alert.alert('Un email de vérification a été envoyé à votre adresse email.');
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        Alert.alert('Erreur lors de l\'envoi de l\'email de vérification', error.message);
-                    });
-                navigation.navigate('Login');
-            })
-            .catch(error => {
-                setLoading(false);
-                Alert.alert('Erreur lors de la création du compte', error.message);
-            });
+            setLoading(true);
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    setLoading(true);
+                    const user = userCredential.user;
+                    sendEmailVerification(user)
+                        .then(() => {
+                            Alert.alert('Un email de vérification a été envoyé à votre adresse email.');
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            Alert.alert('Erreur lors de l\'envoi de l\'email de vérification', error.message);
+                        });
+                    navigation.navigate('Login');
+                })
+                .catch(error => {
+                    setLoading(false);
+                    Alert.alert('Erreur lors de la création du compte', error.message);
+                });
+        }
     };
 
     const handleAddNurse = async () => {

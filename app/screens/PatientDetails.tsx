@@ -2,10 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../FirebaseConfig';
 import { addDoc, collection, doc, setDoc, getDocs, onSnapshot } from "firebase/firestore";
-const PatientDetailsScreen = ({ route }) => {
+
+const PatientDetailsScreen = async ({ route }) => {
 
 
     const { patient } = route.params;
+
+    const patientRef = doc(FIREBASE_DB, 'patient', patient.id);
+    const motifsAdmissionRef = collection(patientRef, 'motifs_admission');
+
+    const motifsAdmissionSnapshot = await getDocs(motifsAdmissionRef);
+    const index = motifsAdmissionSnapshot.size;
+
+    let currentTime: number;
+
+    if (index > 0) {
+        const lastMotifAdmission = motifsAdmissionSnapshot.docs[index - 1].data();
+        currentTime = lastMotifAdmission.time;
+    } else {
+        currentTime = 7;
+    }
+
+    const currentDate = new Date();
 
     const [doseName1, setDoseName1] = useState('');
     const [doseName2, setDoseName2] = useState('');
@@ -15,28 +33,34 @@ const PatientDetailsScreen = ({ route }) => {
 
     const handleAddDose = async () => {
         try {
-            const patientRef = doc(FIREBASE_DB, 'patient', patient.id);
-            const motifsAdmissionRef = collection(patientRef, 'motifs_admission');
-
-
-            const motifsAdmissionSnapshot = await getDocs(motifsAdmissionRef);
-            const index = motifsAdmissionSnapshot.size;
-
-            const currentTime = new Date().toLocaleString();
-
-
             if (doseName1 === '' && doseName2 === '' && doseName3 === '' && doseName4 === '') {
                 throw Error("Please fill in all fields");
             } else {
-                await addDoc(motifsAdmissionRef, {
-                    index: index,
-                    dose1: doseName1,
-                    dose2: doseName2,
-                    dose3: doseName3,
-                    dose4: doseName4,
-                    Comment: Comment,
-                    time: currentTime,
-                });
+                if (currentTime < 7 || currentTime > 6.5) {
+
+                    await addDoc(motifsAdmissionRef, {
+                        dose1: "--",
+                        dose2: "--",
+                        dose3: "Date : " + currentDate.getDate() + "/" + (currentDate.getMonth() + 1) + "/" + currentDate.getFullYear(),
+                        dose4: "--",
+                        Comment: "--",
+                        time: "--",
+                    });
+                    if (updateTime(currentTime) < 24) {
+                        await addDoc(motifsAdmissionRef, {
+                            index: index,
+                            dose1: doseName1,
+                            dose2: doseName2,
+                            dose3: doseName3,
+                            dose4: doseName4,
+                            Comment: Comment,
+                            time: currentTime,
+                        });
+                        updateTime(currentTime);
+                    } else {
+                        currentTime = 24 - (currentTime + 2);
+                    }
+                }
             }
 
             setDoseName1('');
@@ -51,6 +75,10 @@ const PatientDetailsScreen = ({ route }) => {
             alert('Failed to add dose. Please try again.');
         }
     };
+    const updateTime = (time) => {
+        const currentTime = time + 2;
+        return currentTime;
+    }
 
     const [motifsAdmission, setMotifsAdmission] = useState([]);
     useEffect(() => {
@@ -92,17 +120,15 @@ const PatientDetailsScreen = ({ route }) => {
                     {/* Patient details */}
                     <Text style={styles.label}>Nom :</Text>
                     <Text style={styles.detail}>{patient.fname} {patient.lname}</Text>
-                    <Text style={styles.label}>Les Problèmes :</Text>
+                    <Text style={styles.label}>Motifs d'dmission</Text>
                     <Text style={styles.detail}>{patient.problems}</Text>
-                    <Text style={styles.label}>Email :</Text>
-                    <Text style={styles.detail}>{patient.email}</Text>
                     <Text style={styles.label}>Numéro de téléphone :</Text>
                     <Text style={styles.detail}>{patient.phone}</Text>
 
 
                     <View style={styles.TableContainer}>
                         <View style={styles.headerTopBar}>
-                            <Text style={styles.headerTopBarTxt}>Motifs Admission</Text>
+                            <Text style={styles.headerTopBarTxt}>Tableau surveillance</Text>
                         </View>
                         <View style={styles.header}>
                             <Text style={styles.heading}>Per</Text>

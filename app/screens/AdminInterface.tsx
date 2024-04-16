@@ -19,9 +19,7 @@ const AdminInterface = ({ navigation }: RouterProps) => {
   return (
     <ImageBackground source={BackgroundImage} style={styles.backgroundImage}>
 
-      <TouchableOpacity style={styles.buttonP} onPress={() => navigation.navigate('PatientManagement')}>
-        <Text style={styles.buttonProfileText}>Profile</Text>
-      </TouchableOpacity>
+
       <Image source={logo} style={styles.image} resizeMode='contain' />
       <View style={styles.container}>
         <Text style={styles.title} >Welcome to Admin Interface</Text>

@@ -33,7 +33,7 @@ const Login = ({ navigation }: RouterProps) => {
                 return;
             }
     
-            if (user.email === 'mohamedrami.zairi.2022@ihec.ucar.tn') {
+            if (user.email === 'mynurseteam@gmail.com') {
                 navigation.navigate('Inside', { screen: 'Admin Panel' })
             } else {
                 navigation.navigate('Inside', { screen: 'Nurse Panel' })

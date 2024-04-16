@@ -55,7 +55,7 @@ const NurseInterface = ({ navigation }: RouterProps) => {
 };
 
 const handleEmail = () => {
-  Linking.openURL('mailto:nursetn@gmail.com');
+  Linking.openURL('mailto:mynurseteam@gmail.com');
 };
 
 const styles = StyleSheet.create({

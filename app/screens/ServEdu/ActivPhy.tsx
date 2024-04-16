@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SliderBox } from "react-native-image-slider-box";
+
 import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOpacity, Modal, ImageSourcePropType } from 'react-native';
 const BackgroundImage = require("../../../assets/insideBackground.png");
 

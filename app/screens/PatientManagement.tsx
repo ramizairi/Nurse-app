@@ -16,7 +16,6 @@ const PatientInterface = ({ navigation }: RouterProps) => {
   const [lname, setLname] = useState('');
   const [allergies, setAllergies] = useState('');
   const [problems, setProblems] = useState('');
-  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [NurseId, setNurseId] = useState('');
 
@@ -26,7 +25,6 @@ const PatientInterface = ({ navigation }: RouterProps) => {
         fname: fname,
         lname: lname,
         problems: problems,
-        email: email,
         phone: phone,
         NurseId: FIREBASE_AUTH.currentUser?.uid,
       });
@@ -37,9 +35,7 @@ const PatientInterface = ({ navigation }: RouterProps) => {
     } finally {
       setFname('');
       setLname('');
-      setAllergies('');
       setProblems('');
-      setEmail('');
       setPhone('');
     }
   };
@@ -65,15 +61,9 @@ const PatientInterface = ({ navigation }: RouterProps) => {
             />
             <TextInput
               style={styles.input}
-              placeholder="Problèmes de santé actuels"
+              placeholder="Motifs d'admission"
               value={problems}
               onChangeText={setProblems}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              value={email}
-              onChangeText={setEmail}
             />
             <TextInput
               style={styles.input}
